@@ -1,23 +1,23 @@
 ---
 lang: en
-title: 'Validation in the Controller Layer'
+title: 'Validation in the Controller, Repository and Service Layer'
 keywords: LoopBack 4.0, LoopBack 4
 sidebar: lb4_sidebar
-permalink: /doc/en/lb4/Validation-controller-layer.html
+permalink: /doc/en/lb4/Validation-controller-repo-service-layer.html
 ---
 
-In the case where validation rules are not static, validations cannot be
+In the case where validation rules are not static, validation cannot be
 specified at the model level. Hence, validation can be added in the controller
 layer.
 
 Take an example of a promo code in an order, it is usually a defined value that
-only valid for a certain period of time. And in the CoffeeShop example, the area
-code of a phone number usually depends on the geolocation.
+is only valid for a certain period of time. And in the CoffeeShop example, the
+area code of a phone number usually depends on the geolocation.
 
 ## Add validation function in the Controller method
 
-The simplest way is to apply the validation function in the controller method,
-that is:
+The simplest way is to apply the validation function in the controller method.
+For example:
 
 ```ts
 // create a validatePhoneNum function and call it here
@@ -30,11 +30,11 @@ return this.coffeeShopRepository.create(coffeeShop);
 
 Another way is to use [interceptors](Interceptors.md).
 
-> Interceptors are reusable functions to provide aspect-oriented logic around
-> method invocations.
+Interceptors are reusable functions to provide aspect-oriented logic around
+method invocations.
 
 Interceptors have access to the invocation context, including parameter values
-for the method call. It can perform more specific validations, for example,
+for the method call. It can perform more specific validation, for example,
 calling a service to check if an address is valid. There are three types of
 interceptors for different scopes: global, class-level and method-level
 interceptors.
@@ -42,7 +42,7 @@ interceptors.
 Interceptors can be created using the
 [interceptor generator](https://loopback.io/doc/en/lb4/Interceptor-generator.html)
 `lb4 interceptor` command. In the CoffeeShop example, the `phoneNum` in the
-`CoffeeShop` request body will be validated for the `POST` and `PUT` call
+`CoffeeShop` request body will be validated for the `POST` and `PUT` calls
 whether the area code in the phone number matches the specified city. Since this
 is only applicable to the CoffeeShop endpoints, a non-global interceptor is
 created, i.e. specify `No` in the `Is it a global interceptor` prompt.

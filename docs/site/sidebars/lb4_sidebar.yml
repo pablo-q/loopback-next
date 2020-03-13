@@ -203,8 +203,8 @@ children:
         url: Validation-REST-layer.html
         output: 'web, pdf'
 
-      - title: 'Validation in the Controller Layer'
-        url: Validation-controller-layer.html
+      - title: 'Validation in the Controller, Repository and Service Layer'
+        url: Validation-controller-repo-service-layer.html
         output: 'web, pdf'
 
       - title: 'Validation in ORM Layer'

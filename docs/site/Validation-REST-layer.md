@@ -6,21 +6,19 @@ sidebar: lb4_sidebar
 permalink: /doc/en/lb4/Validation-REST-layer.html
 ---
 
-At the REST layer, there are 2 types of validation:
-
-1. [Type validation](#type-validation)
-2. [Validation against OpenAPI schema specification](#validation-against-openapi-schema-specification)
+At the REST layer, request body is being validated against the OpenAPI schema
+specification.
 
 ## Type Validation
 
-The type validation in the REST layer comes out of the box in LoopBack.
+Type valiation comes out-of-the-box in LoopBack.
 
-> Validations are applied on the parameters and the request body data. They also
-> use OpenAPI specification as the reference to infer the validation rules.
+> Validation is applied on the parameters and the request body data. It also
+> uses OpenAPI specification as the reference to infer the validation rules.
 
-Take the `capacity` property in the `CoffeeShop` model as an example, it is a
-number. When creating a `CoffeeShop` by calling /POST, if a string is specified
-for the `capacity` property as below:
+Take the `capacity` property in the [`CoffeeShop` model](Validation.md) as an
+example, it is a number. When creating a `CoffeeShop` by calling /POST, if a
+string is specified for the `capacity` property as below:
 
 ```json
 {
@@ -56,18 +54,19 @@ a "request body is invalid" error is expected:
 ## Validation against OpenAPI Schema Specification
 
 For validation against an OpenAPI schema specification, the
-[AJV module](https://github.com/epoberezkin/ajv) can be used to validate data
-with a JSON schema generated from the OpenAPI schema specification.
+[AJV module](https://github.com/epoberezkin/ajv) is used to validate data with a
+JSON schema generated from the OpenAPI schema specification.
 
 More details can be found about
 [validation keywords](https://github.com/epoberezkin/ajv#validation-keywords)
 and
 [annotation keywords](https://github.com/epoberezkin/ajv#annotation-keywords)
-available in AJV.
+available in AJV. AJV can also be extended with custom keywords and formats, see
+[AJV defining custom keywords page](https://ajv.js.org/custom.html).
 
-Below are a few examples on the usage.
+Below are a few examples of the usage.
 
-### Example#1: Length limit
+### Example 1: Length limit
 
 A typical validation example is to have a length limit on a string using the
 keywords `maxLength` and `minLength`. For example:
@@ -120,9 +119,9 @@ an error will occur with details on what has been violated:
 }
 ```
 
-### Example#2: Value range for a number
+### Example 2: Value range for a number
 
-For numbers, the validation rules can be used to specify the range of the value.
+For numbers, the validation rules are used to specify the range of the value.
 For example, any coffee shop would not be able to have more than 100 people, it
 can be specified as follows:
 
@@ -140,10 +139,10 @@ can be specified as follows:
   capacity: number;
 ```
 
-### Example#3: Pattern in a string
+### Example 3: Pattern in a string
 
 Model properties, such as phone number and postal/zip code, usually have certain
-patterns. In this case, the `pattern` keyword can be used to specify the
+patterns. In this case, the `pattern` keyword is used to specify the
 restrictions.
 
 Below shows an example of the expected pattern of phone numbers, i.e. a sequence
