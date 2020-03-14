@@ -162,3 +162,5 @@ of 10 digits separated by `-` after the 3rd and 6th digits.
   })
   phoneNum: string;
 ```
+
+{% include tip.html content="RegExp can be converted into a string with `.source` to avoid escaping backslashes" %}
