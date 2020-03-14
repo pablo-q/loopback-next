@@ -66,6 +66,8 @@ available in AJV. AJV can also be extended with custom keywords and formats, see
 
 Below are a few examples of the usage.
 
+{% include node.html content="The `jsonSchema` property expects [JSON Schema Draft-07](http://json-schema.org/draft/2019-09/json-schema-validation.html), which is then transformed into the [OAS 3](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md) variant." %}
+
 ### Example 1: Length limit
 
 A typical validation example is to have a length limit on a string using the
