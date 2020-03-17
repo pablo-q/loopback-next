@@ -11,6 +11,18 @@ depending on the usage. Some types of validations come out-of-the-box in
 LoopBack, such as type validation in the REST layer, whereas some require
 additional configuration or code.
 
+There are various types of validations such as:
+
+- validation of input/output for method invocations
+- validation of model instance properties, for example, age < 0
+- validation of model collections, for example, uniqueness
+
+Let's take a closer look at how validation can be added in the following layers:
+
+- [REST layer](Validation-REST-layer.md)
+- [Controller layer](Validation-controller-layer.md)
+- [ORM layer](Validation-ORM-layer.md)
+
 For illustration purpose, a `CoffeeShop` model is being used. It has the
 following properties.
 
@@ -20,9 +32,3 @@ following properties.
 | city          | string | City where the coffee shop is located |
 | phoneNum      | string | Phone number of the coffee shop       |
 | capacity      | number | Capacity of the coffee shop           |
-
-Let's take a closer look at how validation can be added in the following layers:
-
-- [REST layer](Validation-REST-layer.md)
-- [Controller layer](Validation-controller-layer.md)
-- [ORM layer](Validation-ORM-layer.md)

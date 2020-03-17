@@ -9,6 +9,6 @@ permalink: /doc/en/lb4/Validation-ORM-layer.html
 The validation in the ORM layer is to make sure the data being added or updated
 to the database is valid.
 
-There is validation coming from the legacy juggler. The validation is enforced
-at the database level, there is not much additional constraints we can set
-beyond the database ones.
+Schema constraints are enforced by specific databases, such as unique index. For
+pre-processing against CRUD operations, see details:
+https://loopback.io/doc/en/lb4/migration-models-operation-hooks.html.
