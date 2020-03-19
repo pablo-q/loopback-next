@@ -5,6 +5,7 @@
 
 import {MetadataInspector} from '@loopback/context';
 import {
+  AnyType,
   isBuiltinType,
   ModelDefinition,
   ModelMetadataHelper,
@@ -191,6 +192,10 @@ export function stringTypeToWrapper(type: string | Function): Function {
     }
     case 'buffer': {
       wrapper = Buffer;
+      break;
+    }
+    case 'any': {
+      wrapper = AnyType;
       break;
     }
     default: {

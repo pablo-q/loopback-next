@@ -4,6 +4,7 @@
 // License text available at https://opensource.org/licenses/MIT
 
 import {
+  AnyType,
   Model,
   model,
   property,
@@ -50,6 +51,10 @@ describe('build-schema', () => {
 
       it('returns Object for "object"', () => {
         expect(stringTypeToWrapper('object')).to.eql(Object);
+      });
+
+      it('returns AnyType for "any"', () => {
+        expect(stringTypeToWrapper('any')).to.eql(AnyType);
       });
     });
 

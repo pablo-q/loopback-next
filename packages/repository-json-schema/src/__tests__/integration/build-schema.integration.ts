@@ -5,6 +5,7 @@
 
 import {MetadataInspector} from '@loopback/context';
 import {
+  AnyType,
   belongsTo,
   Entity,
   hasMany,
@@ -176,6 +177,25 @@ describe('build-schema', () => {
             type: 'object',
           },
         });
+        expectValidJsonSchema(jsonSchema);
+      });
+
+      it('properly converts any properties', () => {
+        @model()
+        class TestModel {
+          @property({
+            type: 'any',
+          })
+          anyProp: AnyType;
+        }
+
+        const jsonSchema = modelToJsonSchema(TestModel);
+        expect(jsonSchema.properties).to.deepEqual({
+          anyProp: {
+            $ref: '#/definitions/AnyType',
+          },
+        });
+
         expectValidJsonSchema(jsonSchema);
       });
 
