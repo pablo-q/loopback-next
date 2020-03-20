@@ -100,48 +100,117 @@ and are perfect for returning values from the [context](https://loopback.io/doc/
 
 ##### 1. FindRoute
 
-Finds the appropriate endpoint (route or controller method, spec and args) for
-invocation. If no endpoint is fount, it throws an error.
-
-https://loopback.io/doc/en/lb4/apidocs.rest.findrouteprovider.html
+[FindRoute](https://loopback.io/doc/en/lb4/apidocs.rest.findrouteprovider.html) finds the
+appropriate endpoint (route or controller method, spec and args) for invocation.
+If no endpoint is fount, it throws an error.
 
 ##### 2. ParseParams
 
-https://loopback.io/doc/en/lb4/apidocs.rest.parseparamsprovider.html
+[ParseParams](https://loopback.io/doc/en/lb4/apidocs.rest.parseparamsprovider.html)
+parses LoopBack-relevant request paremeters from the request body, URL segment,
+and query parameters.
 
 ##### 3. InvokeMethod
 
-https://loopback.io/doc/en/lb4/apidocs.rest.invokemethodprovider.html
+[InvokeMethod](https://loopback.io/doc/en/lb4/apidocs.rest.invokemethodprovider.html)
+is responsible for calling the enpoint handler, passing in the route found by
+`FindRoute` and the paremeters found by `ParseParams`.
+
+For non-controller endpoints, control is passed on to the respective handlers at
+this stage, which handle the response sending process themselves. For controller
+endpoints, the result of invoking the controller method is returned.
 
 ##### 4. Send
 
-Responsible for sending the
-
-https://loopback.io/doc/en/lb4/apidocs.rest.sendprovider.html
+[Send](https://loopback.io/doc/en/lb4/apidocs.rest.sendprovider.html) is
+responsible for sending the result from calling controller methods after some
+sanity checks.
 
 ##### 5. Reject
 
-Responsible for sending error back to the client in case any of the above helper
-methods throw or encounter any errors.
-
-https://loopback.io/doc/en/lb4/apidocs.rest.rejectprovider.html
+[Reject](https://loopback.io/doc/en/lb4/apidocs.rest.rejectprovider.html) is
+responsible for sending error back to the client in case any of the above helper
+methods throw or encounter any errors; this includes `4xx`, `5xx`, and any
+other type of errors.
 
 #### Request to a controller endpoint
 
-[TODO: explain]
+Requests to a controller endpoint are handled in a very different context than
+requests to a non-controller endpoint. Support for dependency injection and
+interceptors make controller methods very extensible and powerful.
 
-- How controller methods work with various types of services
-- How controller methods work with repositories (and datasource) to get/set
-model data
-- What are interceptors and how they can affect the req-res cycle
-- Walk through a single REST API
+##### Controller methods
+
+Controller methods decorated with operation decorators like `@get()`, `@post()`,
+`@put` etc., are executed when a matching request arrives at the app. These
+methods may, then call a corresponding repository method to read from or write
+to the database.
+
+##### Services
+
+[Services](https://loopback.io/doc/en/lb4/Services.html) are LoopBack's helper
+units with support for dependency injection. They come in three varieties -
+proxy, class, and provider.
+
+A proxy service acts as a proxy to an external service. A class service creates
+an instance of a helper class. A provider service resolves a value.
+
+All of them have access to the app, request, and response objects via dependency
+injections, and can influence the handling of the request-response cycle.
+
+Services can be injected in the controller constructor so controller methods may
+use them.
+
+##### Repositories
+
+[Repositories](https://loopback.io/doc/en/lb4/Repositories.html) are the links
+between controllers and the data. They use an underlying datasource and
+a connector to interact with the data.
+
+Controller methods can call corresponding methods in the respository to read
+from or write to the database.
+
+Repositories can be injected in the controller constructor so controller methods
+may use them.
+
+##### Interceptors
+
+[Interceptors](https://loopback.io/doc/en/lb4/Interceptors.html) intercept
+invocation of method on classes decorate with the `@intercept()` decorator.
+
+All controllers, services, and repositories; and their methods can be intercepted.
+This makes interceptors a powerful participant in the request-response cycle,
+since they can modify the request and response objects and call their methods.
+
+##### Walk through of a request
+
+Now that we know all the components that may be involve in a request to a
+controller endpoint, let's walk through a request to an endpoint - `/ping`
+endpoint of a scaffolded LoopBack app.
+
+The `PingController` controller has a method named `ping()`, decorated with a
+`get()` decorator. This setup creates the `/ping` endpoint on the app.
+
+The app is configured to use the `MySequence` sequence.
+
+Now this is a step-wise sequence of what happens when a request is made to
+`http://localhost:4000/ping`.
+
+1. The request is intercepted by `MySequence`.
+2. The route is then identified by `FindRoute`. There is a handler for this request.
+3. `ParseParams` then tries to parses any parameters might have been submitted.
+There is none.
+4. `InvokeMethod` then invokes the handler with empty parameters. It returns
+whatever the hander returns, in this case, it is JSON object with `greeting`,
+`date`, `url`, and `headers` properties.
+5. `Send` then sends this JSON object back to the client.
 
 #### Request to a non-controller endpoint
 
-[TODO: explain]
+Non-controller endpoints can be created by static files, redirection rules,
+custom Express routes, and non-controller endpoints added by components.
 
-- How requests to non-controller endpoints are handled
-  - static files
-  - redirection
-  - custom Express routes
-  - non-controller endpoints added by components
+Requests to non-controller endpoints are also intercepted by the app's sequence,
+but the control is handed over to the underlying Express middleware from the
+`InvokeMethod` phase, and never make it to `Send` unless the middleware calls
+`next()`. Unhandled error from Express middleware still reach `Reject`.
