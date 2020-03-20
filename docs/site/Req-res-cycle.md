@@ -23,7 +23,7 @@ by other APIs.
 #### Controller endpoints
 
 Controller methods decorated with operation decorators like `@get()`, `@post()`,
-`@put` etc., create enpoints on the app for the corresponding HTTP verbs. The
+`@put` etc., create endpoints on the app for the corresponding HTTP verbs. The
 behavior of these endpoints are entirely dependent on the implementation of the
 controller method.
 
@@ -41,7 +41,7 @@ The following APIs can create non-controller endpoints.
 ##### 1. app.static(path, rootDir, options)
 
 This method maps to the underlying Express' [static](https://expressjs.com/en/4x/api.html#express.static)
-method. It creates dynamic enpoints for files in the `rootDir` to be servered
+method. It creates dynamic endpoints for files in the `rootDir` to be served
 at `path`.
 
 More details at [RestApplication.static()](https://loopback.io/doc/en/lb4/apidocs.rest.restapplication.static.html)
@@ -58,7 +58,7 @@ doc.
 ##### 3. app.mountExpressRouter(basePath, router, spec)
 
 This method mounts an Express [router](https://expressjs.com/en/4x/api.html#router)
-in the LoopBack app. You can use it for adding custom enpoints in your app using
+in the LoopBack app. You can use it for adding custom endpoints in your app using
 the Express middleware format.
 
 More details at [RestApplication.mountExpressRouter()
@@ -82,8 +82,8 @@ The request handling process starts with the app's [sequence](https://loopback.i
 it is the gatekeeper of all requests to the app. Every request, whether to
 controller endpoints or non-controller endpoints, must pass through the sequence.
 
-The sequence identifies the responsible handlers for the requested endpoint and
-passes on the request to the handlers. The handlers then take care of sending
+The sequence identifies the responsible handler for the requested endpoint and
+passes on the request to the handler. The handler then take care of sending
 the response back to the client.
 
 #### The sequence
@@ -201,7 +201,7 @@ Now this is a step-wise sequence of what happens when a request is made to
 3. `ParseParams` then tries to parses any parameters might have been submitted.
 There is none.
 4. `InvokeMethod` then invokes the handler with empty parameters. It returns
-whatever the hander returns, in this case, it is JSON object with `greeting`,
+whatever the handler returns, in this case, it is JSON object with `greeting`,
 `date`, `url`, and `headers` properties.
 5. `Send` then sends this JSON object back to the client.
 
