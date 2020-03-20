@@ -8,7 +8,7 @@ import {
   UserProfileFactory,
 } from '@loopback/authentication';
 import {HttpErrors, Request} from '@loopback/rest';
-import {UserProfile} from '@loopback/security';
+import {UserProfile, securityId} from '@loopback/security';
 import {Strategy} from 'passport';
 
 const passportRequestMixin = require('passport/lib/http/request');
@@ -72,6 +72,18 @@ export class StrategyAdapter<U> implements AuthenticationStrategy {
       strategy.error = function(error: string) {
         reject(new HttpErrors.InternalServerError(error));
       };
+
+      // handle redirection for oauth2 authorization flows
+      strategy.redirect = function(url: string, status: number) {
+        // set redirect options in query
+        // the controller configured with the oauth2 strategy will have to handle actual redirect
+        // the controller can access these values from the request
+        request.query['x-loopback-authentication-redirect-url'] = url;
+        request.query['x-loopback-authentication-redirect-status'] = status;
+        request.query['x-loopback-authentication-redirect-context'] = this.name;
+        // resolve with dummy user profile
+        resolve({[securityId]: ''});
+      }
 
       // authenticate
       strategy.authenticate(request);

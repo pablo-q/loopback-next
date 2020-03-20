@@ -5,6 +5,7 @@
 
 import {OperationRetval, Response} from './types';
 import {Readable} from 'stream';
+import {RedirectRoute} from './router';
 
 /**
  * Writes the result from Application controller method
@@ -28,6 +29,16 @@ export function writeResultToResponse(
     response.statusCode = 204;
     response.end();
     return;
+  }
+
+  // result is of type RedirectRoute
+  const isRedirect = result instanceof RedirectRoute;
+  // Controller methods can return a redirect handler to handle redirections.
+  // This will be useful in certain oauth flows like `authorization code`
+  // , where the authenticating endpoint needs to redirect to a third-party oauth provider
+  if (isRedirect) {
+    const redirectHandler = result as RedirectRoute;
+    return redirectHandler.redirect(response);
   }
 
   const isStream =

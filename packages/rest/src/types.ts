@@ -13,7 +13,7 @@ import {
   OptionsUrlencoded,
 } from 'body-parser';
 import {Request, Response} from 'express';
-import {ResolvedRoute, RouteEntry} from './router';
+import {ResolvedRoute, RouteEntry, RedirectRoute} from './router';
 
 export {Request, Response};
 
@@ -175,7 +175,7 @@ export type OperationArgs = any[];
  * This is a type alias for "any", used to distinguish
  * operation results from other "any" typed values.
  */
-export type OperationRetval = any;
+export type OperationRetval = any | RedirectRoute;
 
 export type GetFromContext = (key: string) => Promise<BoundValue>;
 export type BindElement = (key: string) => Binding;

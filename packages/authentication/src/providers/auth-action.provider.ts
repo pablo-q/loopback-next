@@ -4,7 +4,7 @@
 // License text available at https://opensource.org/licenses/MIT
 
 import {Getter, inject, Provider, Setter} from '@loopback/context';
-import {Request} from '@loopback/rest';
+import {Request, RequestContext} from '@loopback/rest';
 import {SecurityBindings, UserProfile} from '@loopback/security';
 import {AuthenticationBindings} from '../keys';
 import {
@@ -28,7 +28,7 @@ export class AuthenticateActionProvider implements Provider<AuthenticateFn> {
     @inject.getter(AuthenticationBindings.STRATEGY)
     readonly getStrategy: Getter<AuthenticationStrategy>,
     @inject.setter(SecurityBindings.USER)
-    readonly setCurrentUser: Setter<UserProfile>,
+    readonly setCurrentUser: Setter<UserProfile>
   ) {}
 
   /**

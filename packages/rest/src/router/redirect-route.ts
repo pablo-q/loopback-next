@@ -6,7 +6,7 @@
 import {OperationObject, SchemasObject} from '@loopback/openapi-v3';
 import {ResolvedRoute, RouteEntry} from '.';
 import {RequestContext} from '../request-context';
-import {OperationArgs, OperationRetval, PathParameterValues} from '../types';
+import {OperationArgs, OperationRetval, PathParameterValues, Response} from '../types';
 
 export class RedirectRoute implements RouteEntry, ResolvedRoute {
   // ResolvedRoute API
@@ -35,6 +35,18 @@ export class RedirectRoute implements RouteEntry, ResolvedRoute {
     args: OperationArgs,
   ): Promise<OperationRetval> {
     response.redirect(this.statusCode, this.targetLocation);
+  }
+
+  /**
+   * handle redirection to a target location
+   * 
+   * @param response 
+   */
+  redirect(response: Response): void {
+    response.statusCode = this.statusCode || 302;
+    response.setHeader('Location', this.targetLocation);
+    response.setHeader('Content-Length', '0');
+    response.end();
   }
 
   updateBindings(requestContext: RequestContext) {
