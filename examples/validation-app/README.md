@@ -13,7 +13,7 @@ instance with the in-memory storage.
 1. [CoffeeShop model](src/models/coffee-shop.model.ts): Shows how to add
    validation using [AJV](https://www.npmjs.com/package/ajv).
 
-   Example to limit lenght on a string:
+   Example to limit length on a string:
 
    ```ts
    @property({
@@ -29,9 +29,9 @@ instance with the in-memory storage.
    city: string;
    ```
 
-2. [ValidatePhoneNumInterceptor](src/interceptors/validate-phone-num.interceptor.ts)
-   and [CoffeeShopController](src/controllers/coffee-shop.controller.ts): Shows
-   how to add reusable validation logic in interceptors
+2. [ValidatePhoneNumInterceptor](src/interceptors/validate-phone-num.interceptor.ts): interceptor that checks whether the area code of the phone number matches with the city name
+
+3. [CoffeeShopController](src/controllers/coffee-shop.controller.ts): controller where the `ValidatePhoneNumInterceptor` is applied.
 
 ## Use
 
