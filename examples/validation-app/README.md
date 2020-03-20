@@ -41,7 +41,7 @@ Start the app:
 npm start
 ```
 
-The application will start on port 3000. Open http://localhost:3000/explorer in
+The application will listen on port 3000. Open http://localhost:3000/explorer in
 your browser. You can try to test the validation for the `/coffee-shops`
 endpoints.
 
