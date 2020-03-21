@@ -29,9 +29,12 @@ instance with the in-memory storage.
    city: string;
    ```
 
-2. [ValidatePhoneNumInterceptor](src/interceptors/validate-phone-num.interceptor.ts): interceptor that checks whether the area code of the phone number matches with the city name
+2. [ValidatePhoneNumInterceptor](src/interceptors/validate-phone-num.interceptor.ts):
+   interceptor that checks whether the area code of the phone number matches
+   with the city name
 
-3. [CoffeeShopController](src/controllers/coffee-shop.controller.ts): controller where the `ValidatePhoneNumInterceptor` is applied.
+3. [CoffeeShopController](src/controllers/coffee-shop.controller.ts): controller
+   where the `ValidatePhoneNumInterceptor` is applied.
 
 ## Use
 
