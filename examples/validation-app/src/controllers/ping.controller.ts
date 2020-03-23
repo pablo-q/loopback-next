@@ -1,10 +1,5 @@
-// Copyright IBM Corp. 2020. All Rights Reserved.
-// Node module: @loopback/example-validation-app
-// This file is licensed under the MIT License.
-// License text available at https://opensource.org/licenses/MIT
-
-import {Request, RestBindings, get, ResponseObject} from '@loopback/rest';
 import {inject} from '@loopback/context';
+import {get, Request, ResponseObject, RestBindings} from '@loopback/rest';
 
 /**
  * OpenAPI response for ping()
