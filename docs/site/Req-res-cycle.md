@@ -17,7 +17,7 @@ framework to return a result.
 
 The endpoints on a LoopBack app can be categorized into controller endpoints and
 non-controller endpoints. Controller endpoints are those that are created by
-LoopBack controller methods, non-controller endpoints are those that are created
+LoopBack controller methods; non-controller endpoints are those that are created
 by other APIs.
 
 #### Controller endpoints
@@ -31,7 +31,7 @@ controller method.
 controllers may be added to the app by [components](https://loopback.io/doc/en/lb4/Components.html)." %}
 
 In the request-response cycle section we will see how implemenation details
-determine the course of a request these endpoints - they may or may not actually
+determine the course of a request to these endpoints - they may or may not actually
 interact with a model.
 
 #### Non-controller endpoints
@@ -100,9 +100,10 @@ and are perfect for returning values from the [context](https://loopback.io/doc/
 
 ##### 1. FindRoute
 
-[FindRoute](https://loopback.io/doc/en/lb4/apidocs.rest.findrouteprovider.html) finds the
-appropriate endpoint (route or controller method, spec and args) for invocation.
-If no endpoint is fount, it throws an error.
+[FindRoute](https://loopback.io/doc/en/lb4/apidocs.rest.findrouteprovider.html)
+finds the appropriate [ControllerRoute](https://loopback.io/doc/en/lb4/apidocs.rest.controllerroute.html)
+(for controller endpoints) or `ExternalRoute` (for non-controller endpoints)
+route for invocation.
 
 ##### 2. ParseParams
 
@@ -117,8 +118,12 @@ is responsible for calling the enpoint handler, passing in the route found by
 `FindRoute` and the paremeters found by `ParseParams`.
 
 For non-controller endpoints, control is passed on to the respective handlers at
-this stage, which handle the response sending process themselves. For controller
-endpoints, the result of invoking the controller method is returned.
+this stage, which may then handle the response sending process themselves. For
+controller endpoints, the result of invoking the controller method is returned.
+
+If the LoopBack route found by `FindRoute` does not resolve to a handler,
+`InvokeMethod` throws a `NotFoundError` error, which is send to the client
+as a HTTP 404 error.
 
 ##### 4. Send
 
@@ -145,6 +150,17 @@ Controller methods decorated with operation decorators like `@get()`, `@post()`,
 `@put` etc., are executed when a matching request arrives at the app. These
 methods may, then call a corresponding repository method to read from or write
 to the database.
+
+Whatever a controller method returns, becomes the response body. If it throws,
+a HTTP 500 error is returned to the client.
+
+Controller methods injected with `RestBindings.Http.RESPONSE` (instance of
+Express response object) can use the response object to send custom responses.
+
+{% include tip.html content="Use controller methods for creating custom
+endpoints instead of mounting Express routers. Controller methods support
+dependency injection and have access to the whole application context, while
+a Express routes don't." %}
 
 ##### Services
 
