@@ -2,8 +2,16 @@
 
 ## Overview
 
-- Continue with
+With COVID-19 impacting the maintainers (like everyone else in the world!) at
+different levels, we will be committing less story points to give us more
+flexibility.
+
+The goals for this month would be to:
+
+- Aim at finish the
   [Migration guide epic](https://github.com/strongloop/loopback-next/issues/3935)
+  excpet for the
+  [migrate LB3 components related tasks](https://github.com/strongloop/loopback-next/issues/3955).
 - Finish
   [From model definition to REST API with no custom repository/controller classes epic](https://github.com/strongloop/loopback-next/issues/3935)
 
@@ -32,10 +40,6 @@
   - [ ] Docs: Add "Working with Data" section #2527
   - [ ] Docs: how to use OpenAPI connector #4488
 
-- [ ] Miscellaneous
-  - [ ] Model.toObject() should preserve prototypes (e.g. Date and ObjectID
-        values) #3607 (with `help wanted` label, but we might need this sooner?)
-
 ## Stretch Goals
 
 - [ ] LB4 adoption
@@ -52,9 +56,17 @@
 
 ## Looking for Community Contributions
 
-- [ ] Complex OpenAPI Validations with @property #1624
-- [ ] default values added for new required columns when running `autoupdate()`
-      https://github.com/strongloop/loopback-connector-postgresql/pull/418
-- [ ] OpenAPI schema generation and model inheritance #3293
-- [ ] :running: [Spike] How to migrate Angular 1.x and 2+ LB3 client #4610
-- [ ] :running: Document how to send emails in LB4 #1979
+- OpenAPI related
+
+  - [ ] Complex OpenAPI Validations with @property #1624
+  - [ ] :running: Add bearer auth scheme as the default security scheme #4386
+  - [ ] OpenAPI schema generation and model inheritance #3293
+
+- Miscellaneous
+  - [ ] default values added for new required columns when running
+        `autoupdate()`
+        https://github.com/strongloop/loopback-connector-postgresql/pull/418
+  - [ ] Model.toObject() should preserve prototypes (e.g. Date and ObjectID
+        values) #3607
+  - [ ] :running: [Spike] How to migrate Angular 1.x and 2+ LB3 client #4610
+  - [ ] :running: Document how to send emails in LB4 #1979
